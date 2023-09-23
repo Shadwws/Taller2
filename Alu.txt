@@ -1,0 +1,34 @@
+library IEEE;
+use IEE.STD_LOGIC_1164.all;
+use IEE.NUMERIC_STD.ALL;
+
+entity ALU is
+	generic(N : SIGNAL :=4);
+    port (
+    	nro1,nro2: in signed(N-1 downto 0);
+        selec: in std_logic_vector(1 downto 0);
+        flag: out std_logic_vector(3 downto 0);
+        resul: out signed(n-1 downto 0);
+        );
+end ALU;
+
+architecture behavioral of alu is 
+	signal s1, s2 : signal;
+    signal flag : signal;
+begin
+	logica: entity work.modulo_logico(behavioral)
+    	port map(a=>nro1, b=>nro2, op=>selec, r=>s1);
+        
+	aritmetica: entity work.modulo_aritmetico(behavioral)
+    	port map(a=>nro1, b=>nro2, op=>selec, r=>s2, zcvn=>flag);
+    
+	with sel select
+     resul<=s1  when "00",
+          	s1  when "01",
+          	s2 when "10",
+          	s2 when other;
+            
+	flag<=flag;
+
+end behavioral;
+    
