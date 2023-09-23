@@ -1,0 +1,36 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity modulo_aritmetico is 
+	generic(N: integer := 4);
+    
+	port (
+    	A,B: in signed(N-1 downto 0);
+        OP: in std_logic;
+		R: out signed(N-1 downto 0);
+        zcvn: out std_logic_vector(3 downto 0)
+    );
+    
+end modulo_aritmetico;
+
+architecture Behavioral of modulo_aritmetico is
+
+   signal resultado: signed(N downto 0);
+   signal complementoA2: signed(N-1 downto 0);
+   
+begin
+	resultado <= ('0' & A) + ('0' & B) when OP = '0' else
+    		A - B;
+            
+    complementoA2 <= (not resultado) + 1;
+    
+    zcvn(3) <= resultado(3) nor resultado(2) nor resultado(1) nor resultado(0);
+    zcvn(1) <= (resultado(3) xor A (3)) and (A(3) xnor B(3));
+    zcvn(2) <= '1' when (OP = '1' and resultado(N) = '1) or 
+    					(OP = '0' and complementoA2(N-1) = '1') else '0';
+    zcvn(0)	<= resultado(N-1);
+    
+    R <= resultado(N-1 downto 0);
+    
+end Behavioral;
