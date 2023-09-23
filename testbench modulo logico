@@ -1,0 +1,9 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity testbench_modulo_logico is
+end entity testbench_modulo_logico;
+
+architecture behavioral of testbench_modulo_logico is
+
+	component modulo_logico
