@@ -1,0 +1,24 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity modulo_logico is
+	generic(N: integer := 4);
+	port (
+      	
+      	A,B: in signed(N-1 down to 0);
+        
+        op: in std_logic;
+
+		R: out signed(N-1 down to 0)
+        );
+
+end modulo_logico;
+
+architecture Behavioral of modulo_logico is
+begin 
+		
+        R <= A and B when op = 0 else
+        	 A or B;
+
+end behavioral;
