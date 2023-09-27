@@ -1,8 +1,125 @@
-Chicos: un par de cosas. fijense que hay errores en el diseño (además del testbench). pregunta hicieron todo el tp4 de vhdl? les funcionaron la simulacion? Que no corrijamos las practicas si no las hacen se les va a complicar en lo que resta de la materia
+CODIGO
+______________________________________________________
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
-para la proxima envienos directamente el link del edaplayground  asi:
-https://www.edaplayground.com/x/ZziT
+entity modulo_logico is
+	generic(N: integer := 4);
+	port (
+      	A,B: in signed(N-1 downto 0);
+        op: in std_logic;
+		R: out signed(N-1 downto 0)
+        );
 
-ahi les corregi los errores del diseño, revisen uds lo que falta corregir del testbench y cualquier cosa vuelvan a preguntarnos
+end modulo_logico;
 
-saludos
+architecture Behavioral of modulo_logico is
+begin 
+		with op select
+        R <= A and B when '0', 
+        	 A or B when others;  
+
+
+
+TESTBENCH
+_______________________________________________________
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity test_modulo_logico is
+end;
+
+architecture behavioral of test_modulo_logico is
+
+
+component logico is
+    generic (N: integer:= 4);
+    port 
+    (
+      
+      A,B: in signed(N-1 downto 0);
+      
+      op: in std_logic;
+      
+      R: out signed(N-1 downto 0)
+      
+    );
+    end component;
+
+signal test_A : signed(N-1 down to 0) := "0000";
+signal test_B : signed(N-1 down to 0) := "0000";
+signal test_op : std_logic := '0';
+signal test_R : signed(N-1 down to 0) := "0000";
+
+
+begin
+      --Ahora empiezan las pruebas posta
+
+       uut: modulo_logico 
+        port map
+        (          
+             A => test_A,
+             B => test_B,
+             op => test_op,
+             R => test_R
+             
+        );
+process
+begin
+    --empiezan las pruebas
+
+--primer caso
+test_A <= "0000"; 
+test_B <= "0000";
+test_op <= '0';
+wait for 1 ns;
+assert test_R = "0000" report "Fallo primer caso" severity failure; 
+
+
+--segundo caso
+test_A <= "0011";
+test_B <= "0101";
+test_op <= '0';
+wait for 1 ns;
+assert test_R = "0001" report "Fallo segundo caso" severity failure;
+
+--tercer caso
+test_A <= "1111";
+test_B <= "1111";
+test_op <= '0';
+wait for 1 ns;
+assert test_R = "1111" report "Fallo tercer caso" severity failure;
+
+--cuarto caso
+test_A <= "0001";
+test_B <= "0101";
+test_op <= '1';
+wait for 1 ns;
+assert test_R = "0101" report "Fallo cuarto caso" severity failure;
+
+--quinto caso
+test_A <= "0001";
+test_B <= "0000";
+test_op <= '1';
+wait for 1 ns;
+assert test_R = "0001" report "Fallo quinto caso" severity failure;
+
+--sexto caso
+test_A <= "0011";
+test_B <= "1101";
+test_op <= '1';
+wait for 1 ns;
+assert test_R = "1111" report "Fallo sexto caso" severity failure;
+
+--al terminar todos los casos
+assert false report "Todo anduvo joya" severity note;
+wait;
+
+end process;
+end;
+
+_______________________________________________________________
+
+Gracias por llegar hasta abajo :)
