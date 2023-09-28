@@ -31,8 +31,7 @@ begin
 
     zcvn(2) <= '1' when ((OP = '1' and resultado(N) = '1') or 
     			(OP = '0' and complementoA2(N-1) = '1')) else '0';
-                 
-                    
+              
     zcvn(0)	<= resultado(N-1);
     
     R <= resultado(N-1 downto 0);
