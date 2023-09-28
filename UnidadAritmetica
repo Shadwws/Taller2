@@ -30,8 +30,8 @@ begin
  
     zcvn(1) <= (resultado(N-1) xor A(N-1)) and (A(N-1) xnor B(N-1));
 
-    zcvn(2) <= '1' when ((OP = '1' and resultado(N-1) = '1') or 
-    			(OP = '0' and complementoA2(N-1) = '1')) else '0';
+    zcvn(2) <= '1' when ((OP = '0' and resultado(N) = '1') or 
+    			(OP = '1' and resultado(N) = '1' else '0';
               
     zcvn(0)	<= resultado(N-1);
     
